@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
-name: build5nines/azd-react-bootstrap-dashboard
+name: build5nines-azd-react-bootstrap-dashboard
 metadata:
-  template: build5nines/azd-react-bootstrap-dashboard@1.0.0
+  template: build5nines-azd-react-bootstrap-dashboard@1.0.0
 
 infra:
   provider: bicep
@@ -27,11 +27,3 @@ services:
     project: ./src/api                    # Path to Node.js API project
     host: appservice                      # Host on Azure App Service
     language: js                          # Language: JavaScript
-    hooks:
-      prepackage:                         # Hook to install dependencies before deployment
-        posix:
-          shell: sh
-          run: npm install
-        windows:
-          shell: pwsh
-          run: npm install

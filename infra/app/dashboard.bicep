@@ -4,7 +4,7 @@ param tags object = {}
 
 param serviceName string = 'web'
 
-module web '../shared/staticwebapp.bicep' = {
+module web '../core/host/staticwebapp.bicep' = {
   name: '${serviceName}-staticwebapp-module'
   params: {
     name: name

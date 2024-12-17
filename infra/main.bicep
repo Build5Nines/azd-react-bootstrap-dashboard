@@ -44,7 +44,7 @@ module api './app/api.bicep' = {
   name: 'api'
   scope: rg
   params: {
-    name: '${abbrs.webSitesFunctions}api-${resourceToken}'
+    name: '${abbrs.webSitesAppService}api-${resourceToken}'
     location: location
     tags: tags
     applicationInsightsName: monitoring.outputs.applicationInsightsName
@@ -53,7 +53,7 @@ module api './app/api.bicep' = {
 }
 
 // Monitor application with Azure Monitor
-module monitoring './shared/monitor/monitoring.bicep' = {
+module monitoring './core/host/monitor/monitoring.bicep' = {
   name: 'monitoring'
   scope: rg
   params: {

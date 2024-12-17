@@ -5,28 +5,32 @@ param applicationInsightsName string
 param allowedOrigins array
 
 // Create the App Service Plan
-module appServicePlan '../shared/appserviceplan.bicep' = {
+module appServicePlan '../core/host/appserviceplan.bicep' = {
   name: 'appServicePlan'
   params: {
-    name: 'appServicePlan-${name}'
+    name: 'asp-${name}'
     location: location
     tags: tags
   }
 }
 
 // Create the App Service
-module appService '../shared/appservice.bicep' = {
+module appService '../core/host/appservice.bicep' = {
   name: 'appService'
   params: {
     name: name
     location: location
-    tags: tags
+    tags: union(tags, { 'azd-service-name': 'api' })
     appServicePlanId: appServicePlan.outputs.id
+    runtimeName: 'node'
+    runtimeVersion: '20-lts'
     applicationInsightsName: applicationInsightsName
-    allowedOrigins: allowedOrigins
+    appSettings:{
+      'ALLOWED_ORIGINS': join(allowedOrigins, ',')
+    }
   }
 }
 
 output appServicePlanId string = appServicePlan.outputs.id
 output apiAppName string = appService.outputs.name
-output apiAppUrl string = appService.outputs.defaultHostName
+output apiAppUrl string = appService.outputs.uri
