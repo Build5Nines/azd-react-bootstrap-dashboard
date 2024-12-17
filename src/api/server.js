@@ -7,19 +7,9 @@ const statusRoutes = require('./routes/v1/statusRoutes');
 const app = express();
 const port = 4242;
 
-// CORS configuration
-const allowedOrigins = [
-  'http://localhost:3000',
-  // 'https://your-specific-domain.com', // add your domain here
-  ];
+// CORS configuration to allow all origins
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
+  origin: '*'
 }));
 
 app.use(express.json());
