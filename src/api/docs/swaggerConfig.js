@@ -4,14 +4,11 @@ const swaggerSpec = (port) => {
     // Function to determine server URL dynamically
     const getServerUrl = () => {
         const host = process.env.WEBSITE_HOSTNAME || 'localhost';
-        const protocol = process.env.PROTOCOL || (host === 'localhost' ? 'http' : 'https');
     
-        // Handle default ports for HTTP and HTTPS
-        const portString = (protocol === 'http' && port == 80) || (protocol === 'https' && port == 443)
-        ? ''
-        : `:${port}`;
+        // Handle port for running localhost or in Azure App Service
+        const portString = (host === 'localhost' ? `:${port}` : '');
     
-        return `${protocol}://${host}${portString}`;
+        return `${(host === 'localhost' ? 'http' : 'https')}://${host}${portString}`;
     };
   
     const options = {
