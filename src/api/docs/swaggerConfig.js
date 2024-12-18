@@ -3,7 +3,7 @@ const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerSpec = (port) => {
     // Function to determine server URL dynamically
     const getServerUrl = () => {
-        const host = process.env.HOST || 'localhost';
+        const host = process.env.WEBSITE_HOSTNAME || 'localhost';
         const protocol = process.env.PROTOCOL || (host === 'localhost' ? 'http' : 'https');
     
         // Handle default ports for HTTP and HTTPS
