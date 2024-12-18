@@ -1,4 +1,4 @@
-# azd-react-bootstrap-dashboard
+# azd-react-bootstrap-dashboard ![Awesome Badge](https://awesome.re/badge-flat2.svg)
 An `azd` template providing a React.js App + Bootstrap 5 front-end dashboard app with backend Node.js API app hosted in Microsoft Azure Static Web Apps and App Service.
 
 To use this template, run the following command using the [Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/overview):
