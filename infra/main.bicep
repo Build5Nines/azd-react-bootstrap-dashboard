@@ -33,7 +33,7 @@ module dashboard './app/dashboard.bicep' = {
   name: 'dashboard'
   scope: rg
   params: {
-    name: '${abbrs.webStaticSites}web-${resourceToken}'
+    name: '${abbrs.webStaticSites}dashboard-${resourceToken}'
     location: location
     tags: tags
   }

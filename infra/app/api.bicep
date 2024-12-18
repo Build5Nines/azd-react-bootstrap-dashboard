@@ -22,6 +22,8 @@ module appService '../core/host/appservice.bicep' = {
     location: location
     tags: union(tags, { 'azd-service-name': 'api' })
     appServicePlanId: appServicePlan.outputs.id
+    alwaysOn: false
+    use32BitWorkerProcess: true
     runtimeName: 'node'
     runtimeVersion: '20-lts'
     applicationInsightsName: applicationInsightsName
