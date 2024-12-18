@@ -64,3 +64,5 @@ module monitoring './core/host/monitor/monitoring.bicep' = {
     applicationInsightsDashboardName: '${abbrs.portalDashboards}${resourceToken}'
   }
 }
+
+output SERVICE_API_ENDPOINT_URL string = api.outputs.apiAppUrl
