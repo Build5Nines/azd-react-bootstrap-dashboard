@@ -11,6 +11,13 @@ module appServicePlan '../core/host/appserviceplan.bicep' = {
     name: 'asp-${name}'
     location: location
     tags: tags
+    sku: {
+      name: 'F1'
+      tier: 'Free'
+      size: 'F1'
+      family: 'F'
+      capacity: 1
+    }
   }
 }
 
@@ -27,8 +34,8 @@ module appService '../core/host/appservice.bicep' = {
     runtimeName: 'node'
     runtimeVersion: '20-lts'
     applicationInsightsName: applicationInsightsName
+    allowedOrigins: allowedOrigins
     appSettings:{
-      'ALLOWED_ORIGINS': join(allowedOrigins, ',')
     }
   }
 }

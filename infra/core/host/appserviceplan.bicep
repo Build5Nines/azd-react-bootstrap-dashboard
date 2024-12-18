@@ -6,10 +6,10 @@ param tags object = {}
 param kind string = ''
 param reserved bool = true
 param sku object = {
-  name: 'F1'
-  tier: 'Free'
-  size: 'F1'
-  family: 'F'
+  name: 'S1'
+  tier: 'Standard'
+  size: 'S1'
+  family: 'S'
   capacity: 1
 }
 
