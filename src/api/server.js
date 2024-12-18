@@ -5,7 +5,7 @@ const swaggerSpec = require('./docs/swaggerConfig');
 const statusRoutes = require('./routes/v1/statusRoutes');
 
 const app = express();
-const port = 4242;
+const port = 8080;
 
 // CORS configuration to allow all origins
 app.use(cors({
