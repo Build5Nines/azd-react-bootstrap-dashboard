@@ -1,5 +1,5 @@
 // src/Shell.js
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom';
 
 import UserProfile from './../../components/UserProfile';
@@ -12,6 +12,39 @@ const Shell = ({ isDarkTheme }) => {
   const userName = "John Doe"; // Replace with actual user name
   const userAvatar = "user-avatar.svg"; // Replace with actual avatar URL
 
+  useEffect(() => {
+    const handleResize = () => {
+      const sidebarMenu = document.getElementById('sidebarMenu');
+      if (!sidebarMenu.classList.contains('offcanvas')) { //window.innerWidth >= 768) {
+        sidebarMenu.classList.remove('collapse');
+        sidebarMenu.classList.remove('show');
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Call once to set initial state
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const navLinks = document.querySelectorAll('#sidebarMenu .nav-link');
+    const hideSidebar = () => {
+      const sidebarMenu = document.getElementById('sidebarMenu');
+      sidebarMenu.classList.remove('show');
+    };
+    navLinks.forEach(link => {
+      link.addEventListener('click', hideSidebar);
+    });
+    return () => {
+      navLinks.forEach(link => {
+        link.removeEventListener('click', hideSidebar);
+      });
+    };
+  }, []);
+
   return (
     <Router>
       <div className="container-fluid">
@@ -19,8 +52,6 @@ const Shell = ({ isDarkTheme }) => {
           <div className="col-md-3 col-lg-2 p-0">
             <div className={`sidebar offcanvas-md offcanvas-start ${isDarkTheme ? 'bg-dark text-white' : 'bg-light text-dark'}`} tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
               <div className="offcanvas-header">
-                <h5 className="offcanvas-title" id="sidebarMenuLabel">Contoso Finance</h5>
-                <button type="button" className="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
               </div>
               <div className="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
                 <ul className="nav flex-column">
