@@ -15,7 +15,7 @@ app.use(cors({
 app.use(express.json());
 
 // Swagger API Docs
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec(port)));
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec(port)));
 
 // Routes
 app.use('/v1/status', statusRoutes);
