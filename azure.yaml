@@ -8,11 +8,18 @@ infra:
 
 hooks:
   postprovision:
-    shell: sh
-    run: |
-      cd ./src/dashboard
-      rm -rf .env
-      echo "REACT_APP_SERVICE_API_ENDPOINT_URL=${SERVICE_API_ENDPOINT_URL}" > .env
+    posix:
+      shell: sh
+      run: |
+        cd ./src/dashboard
+        rm -rf .env
+        echo "REACT_APP_SERVICE_API_ENDPOINT_URL=${SERVICE_API_ENDPOINT_URL}" > .env
+    windows:
+      shell: pwsh
+      run: |
+        cd ./src/dashboard
+        Remove-Item -Path .env -Recurse -Force
+        echo "REACT_APP_SERVICE_API_ENDPOINT_URL=${env:SERVICE_API_ENDPOINT_URL}" > .env
 
 services:
   # Dashboard App
