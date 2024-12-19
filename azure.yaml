@@ -22,7 +22,7 @@ services:
     language: js              # JavaScript
     dist: build               # Build output folder
     hooks:
-      prepackage:
+      predeploy:
         posix:                            # Optional hook to run React build before deployment
           shell: sh
           run: npm install && npm run build
