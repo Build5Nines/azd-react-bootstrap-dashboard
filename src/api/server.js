@@ -14,11 +14,11 @@ app.use(cors({
 
 app.use(express.json());
 
-// Swagger API Docs
-app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec(port)));
-
 // Routes
 app.use('/v1/status', statusRoutes);
+
+// Swagger API Docs
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec(port)));
 
 // Server Start
 app.listen(port, () => {
