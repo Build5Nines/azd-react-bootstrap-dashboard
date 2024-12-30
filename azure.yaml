@@ -18,7 +18,7 @@ hooks:
       shell: pwsh
       run: |
         cd ./src/dashboard
-        Remove-Item -Path .env -Recurse -Force
+        Remove-Item -Path .env -Recurse -Force -ErrorAction SilentlyContinue
         echo "REACT_APP_SERVICE_API_ENDPOINT_URL=${env:SERVICE_API_ENDPOINT_URL}" > .env
 
 services:
