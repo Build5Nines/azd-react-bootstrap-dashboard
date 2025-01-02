@@ -44,9 +44,15 @@ These are the Azure resources that are deployed with this template:
 
 ## Dashboard UI
 
-Here's a screenshot of what the Dashboard UI built with React.js and Bootstrap looks like:
+Here's a screenshot of what the Dashboard UI, built with React.js and Bootstrap, looks like:
 
 ![Dashboard screenshot](assets/dashboard-screenshot.png)
+
+## API Swagger UI
+
+Here's a screenshot of the API application, built with Node.js, that exposes the Swagger UI:
+
+![API Swagger screenshot](assets/api-screenshot.jpg)
 
 ## Author
 
