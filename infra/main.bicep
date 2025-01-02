@@ -49,6 +49,18 @@ module api './app/api.bicep' = {
     tags: tags
     applicationInsightsName: monitoring.outputs.applicationInsightsName
     allowedOrigins: [ dashboard.outputs.SERVICE_WEB_URI ]
+    appConfigurationName: appConfig.outputs.name
+  }
+}
+
+module appConfig './core/host/appconfiguration.bicep' = {
+  name: 'appConfig'
+  scope: rg
+  params: {
+    name: '${abbrs.appConfigurationStores}appconfig-${resourceToken}'
+    location: location
+    tags: tags
+    SkuName: 'Free'
   }
 }
 

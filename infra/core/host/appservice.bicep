@@ -5,8 +5,11 @@ param tags object = {}
 // Reference Properties
 param applicationInsightsName string = ''
 param appServicePlanId string
+
+param managedIdentity bool = false
 param keyVaultName string = ''
-param managedIdentity bool = !empty(keyVaultName)
+param appConfigurationName string = ''
+
 
 // Runtime Properties
 @allowed([
@@ -91,7 +94,7 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
   }
 }
 
-module config 'appservice-appsettings.bicep' = if (!empty(appSettings)) {
+module config 'appservice-appsettings.bicep' = {
   name: '${name}-appSettings'
   params: {
     name: appService.name
@@ -102,12 +105,26 @@ module config 'appservice-appsettings.bicep' = if (!empty(appSettings)) {
       },
       runtimeName == 'python' && appCommandLine == '' ? { PYTHON_ENABLE_GUNICORN_MULTIWORKERS: 'true'} : {},
       !empty(applicationInsightsName) ? { APPLICATIONINSIGHTS_CONNECTION_STRING: applicationInsights.properties.ConnectionString } : {},
-      !empty(keyVaultName) ? { AZURE_KEY_VAULT_ENDPOINT: keyVault.properties.vaultUri } : {})
+      !empty(keyVaultName) ? { AZURE_KEY_VAULT_ENDPOINT: keyVault.properties.vaultUri } : {},
+      !empty(appConfigurationName) ? { 'AppConfig_Endpoint' : appConfiguration.properties.endpoint } : {})
   }
 }
 
 resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' existing = if (!(empty(keyVaultName))) {
   name: keyVaultName
+}
+
+resource appConfiguration 'Microsoft.AppConfiguration/configurationStores@2024-05-01' existing = if (!(empty(appConfigurationName))) {
+  name: appConfigurationName
+}
+
+resource appConfigRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = if (!(empty(appConfigurationName))) {
+  name: guid(appService.id, 'AppConfigDataReader')
+  scope: appConfiguration
+  properties: {
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b7e6dc6d-f1e8-4753-8033-0f276bb0955b') // App Configuration Data Reader role
+    principalId: appService.identity.principalId
+  }
 }
 
 resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing = if (!empty(applicationInsightsName)) {

@@ -3,6 +3,7 @@ param location string
 param tags object
 param applicationInsightsName string
 param allowedOrigins array
+param appConfigurationName string = ''
 
 // Create the App Service Plan
 module appServicePlan '../core/host/appserviceplan.bicep' = {
@@ -29,6 +30,8 @@ module appService '../core/host/appservice.bicep' = {
     location: location
     tags: union(tags, { 'azd-service-name': 'api' })
     appServicePlanId: appServicePlan.outputs.id
+    managedIdentity: true
+    appConfigurationName: appConfigurationName
     alwaysOn: false
     use32BitWorkerProcess: true
     runtimeName: 'node'
